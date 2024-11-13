@@ -1,0 +1,18 @@
+ public List listarVersion(){
+        List<Version> list_version = new ArrayList();
+        String query = "SELECT ver.*, mar.idmarca, mo.idmodelo FROM version as ver inner join modelo as mo on ver.idmodelo = mo.idmodelo inner join marca as mar on ver.idmarca = mar.idmarca  ORDER BY marca ASC";
+        try {
+            con = cn.conectar();
+            pst = con.prepareStatement(query);
+            rs = pst.executeQuery();
+            while(rs.next()){
+                Version version = new Version();
+                version.setIdVersion(rs.getInt("idVersion"));
+                version.setVersion(rs.getString("version"));
+                version.setIdMarca(rs.getInt ("idMarca"));
+                version.setMarca(rs.getString("marca"));
+                version.setIdModelo(rs.getInt("IdModelo"));
+                version.setModelo(rs.getString("modelo"));
+                
+                list_version.add(version);
+            }
